@@ -1,21 +1,15 @@
 package com.teambingo.recruting_platform.database;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.TreeSet;
 
-import org.apache.commons.lang3.text.WordUtils;
-
-import com.bingo.eatime.util.Gravatar;
 import com.google.appengine.api.datastore.Email;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Link;
 
-public class Person{
+public class Person {
 
 	public static final String KIND_PERSON = "person";
 	public static final String KIND_READ_EVENTKEY = "read-event-key";
@@ -59,7 +53,7 @@ public class Person{
 		this.key = key;
 		return this;
 	}
-	
+
 	private Person setKey(String username) {
 		this.key = KeyFactory.createKey(KIND_PERSON, username.trim());
 		return this;
@@ -109,7 +103,7 @@ public class Person{
 		this.address = address.trim();
 		return this;
 	}
-	
+
 	public String getUniversity() {
 		return university;
 	}
@@ -118,7 +112,7 @@ public class Person{
 		this.university = university.trim();
 		return this;
 	}
-	
+
 	public String getMajor() {
 		return major;
 	}
@@ -127,7 +121,7 @@ public class Person{
 		this.major = major.trim();
 		return this;
 	}
-	
+
 	public double getGPA() {
 		return gpa;
 	}
@@ -136,7 +130,7 @@ public class Person{
 		this.gpa = gpa;
 		return this;
 	}
-	
+
 	public String getBackground() {
 		return background;
 	}
@@ -145,7 +139,7 @@ public class Person{
 		this.background = background.trim();
 		return this;
 	}
-	
+
 	public String getInterest() {
 		return interest;
 	}
@@ -154,6 +148,7 @@ public class Person{
 		this.interest = interest.trim();
 		return this;
 	}
+
 	public HashSet<Key> getReadEventKeys() {
 		return readEventKeys;
 	}
@@ -161,41 +156,6 @@ public class Person{
 	private Person setReadEventKeys(HashSet<Key> readEventKeys) {
 		this.readEventKeys = readEventKeys;
 		return this;
-	}
-
-	public String getFullName() {
-		return getFullName(true);
-	}
-
-	public String getFullName(boolean capitalized) {
-		if (capitalized) {
-			return WordUtils.capitalizeFully(firstName) + " "
-					+ WordUtils.capitalizeFully(lastName);
-		} else {
-			return firstName + " " + lastName;
-		}
-	}
-
-	public String getGravatarUrlString() {
-		return Gravatar.getGravatarUrlString(email.getEmail(), true, 100);
-	}
-
-	public URL getGravatarUrl() {
-		try {
-			URL url = new URL(getGravatarUrlString());
-
-			return url;
-		} catch (MalformedURLException e) {
-
-		}
-
-		return null;
-	}
-
-	public Link getGravatarUrlLink() {
-		Link link = new Link(getGravatarUrlString());
-
-		return link;
 	}
 
 	protected static TreeSet<Person> newPeople() {
@@ -237,15 +197,17 @@ public class Person{
 			person.setFirstName((String) entity.getProperty(PROPERTY_FIRSTNAME));
 			person.setLastName((String) entity.getProperty(PROPERTY_LASTNAME));
 			person.setEmail((Email) entity.getProperty(PROPERTY_EMAIL));
-			
-			HashSet<Key> readEventKeys = PersonManager.getReadEventKeys(entity.getKey());
-			person.setReadEventKeys(readEventKeys);
+
+			// HashSet<Key> readEventKeys =
+			// PersonManager.getReadEventKeys(entity.getKey());
+			// person.setReadEventKeys(readEventKeys);
 
 			return person;
 		} else {
-			throw new EntityKindNotMatchException(
-					"Entity Kind must be KIND_PERSON instead of "
-							+ entity.getKind() + ".");
+			// throw new EntityKindNotMatchException(
+			// "Entity Kind must be KIND_PERSON instead of "
+			// + entity.getKind() + ".");
+			return null;
 		}
 	}
 
@@ -265,14 +227,15 @@ public class Person{
 			return people;
 		}
 	}
-	
+
 	public static Key createKey(String personKeyName) {
 		return KeyFactory.createKey(KIND_PERSON, personKeyName);
 	}
 
 	@Override
 	public String toString() {
-		return getFullName(true);
+		// return getFullName(true);
+		return "";
 	}
 
 }
