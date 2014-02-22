@@ -169,7 +169,7 @@ public class EventManager {
 	}
 	
 	public synchronized static boolean addJoins(Iterable<Person> people, long eventKeyId) {
-		Key eventKey = Event.createKey(eventKeyId, restaurantKeyName);
+		Key eventKey = Event.createKey(eventKeyId);
 		
 		return addJoins(people, eventKey);
 	}
@@ -214,72 +214,6 @@ public class EventManager {
 		} else {
 			return null;
 		}
-	}
-
-	/**
-	 * Get all Event entities of a Restaurant key.
-	 * 
-	 * @param restaurantKey
-	 *            Restaurant key.
-	 * @return Iterable of event entities.
-	 */
-	public synchronized static Iterable<Entity> getEventEntitiesFromRestaurant(
-			Key restaurantKey) {
-		return getEventEntitiesFromRestaurant(restaurantKey, null);
-	}
-
-	/**
-	 * Get all Event objects of a Restaurant Key.
-	 * 
-	 * @param restaurantKey
-	 *            Restaurant key.
-	 * @return A set of Event object ordered by time. Null if not found.
-	 */
-	public synchronized static TreeSet<Event> getEventsFromRestaurant(Key restaurantKey) {
-		return getEventsFromRestaurant(restaurantKey, null);
-	}
-
-	/**
-	 * Get all Event entities of a Restaurant key based on a specific date.
-	 * 
-	 * @param restaurantKey
-	 *            Restaurant key.
-	 * @param date
-	 *            A specific date.
-	 * @return Iterable of event entities.
-	 */
-	public synchronized static Iterable<Entity> getEventEntitiesFromRestaurant(
-			Key restaurantKey, Date date) {
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-
-		Query q = new Query(Event.KIND_EVENT, restaurantKey);
-		Filter restaurantKeyFilter = new FilterPredicate(
-				Event.PROPERTY_RESTAURANTKEY, Query.FilterOperator.EQUAL,
-				restaurantKey);
-
-		if (date == null) {
-			q.setFilter(restaurantKeyFilter);
-		} else {
-			Date startDate = Utilities.getStartEndDate(date, true);
-			Date endDate = Utilities.getStartEndDate(date, false);
-
-			Filter startDateFilter = new FilterPredicate(Event.PROPERTY_TIME,
-					Query.FilterOperator.GREATER_THAN_OR_EQUAL, startDate);
-			Filter endDateFilter = new FilterPredicate(Event.PROPERTY_TIME,
-					Query.FilterOperator.LESS_THAN_OR_EQUAL, endDate);
-
-			Filter timeFilter = CompositeFilterOperator.and(startDateFilter,
-					endDateFilter);
-			Filter overallFilter = CompositeFilterOperator.and(
-					restaurantKeyFilter, timeFilter);
-
-			q.setFilter(overallFilter);
-		}
-
-		PreparedQuery pq = datastore.prepare(q);
-
-		return pq.asIterable();
 	}
 
 //	/**
