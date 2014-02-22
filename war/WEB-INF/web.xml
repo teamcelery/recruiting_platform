@@ -6,13 +6,13 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
 		<servlet-name>Recuriting_platform</servlet-name>
-		<servlet-class>com.teambingo.recuriting_platform.Recuriting_platformServlet</servlet-class>
+		<servlet-class>com.teambingo.recruiting_platform.Recuriting_platformServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Recuriting_platform</servlet-name>
 		<url-pattern>/recuriting_platform</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>candidate.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>
