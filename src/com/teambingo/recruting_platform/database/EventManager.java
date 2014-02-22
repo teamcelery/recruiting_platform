@@ -31,8 +31,6 @@ public class EventManager {
 		try {
 
 			Entity eventEntity = new Entity(Event.KIND_EVENT);
-			eventEntity.setProperty(Event.PROPERTY_NAME, event.getName());
-			eventEntity.setProperty(Event.PROPERTY_TIME, event.getTime());
 
 			eventKey = datastore.put(eventEntity);
 			

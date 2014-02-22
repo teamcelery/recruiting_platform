@@ -29,8 +29,7 @@ public class DatabaseTestServlet extends HttpServlet {
 		PersonManager.addPerson(p);
 		PersonManager.addPerson(p2);
 
-		Event e = Event.createEvent("Test event",
-				new Date(System.currentTimeMillis()));
+		Event e = Event.createEvent("Test event");
 		Key eKey = EventManager.addEvent(e);
 
 		EventManager.addJoin(p, eKey);

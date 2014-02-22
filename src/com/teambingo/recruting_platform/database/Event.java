@@ -21,7 +21,6 @@ public final class Event {
 
 	private Key key;
 	private String name;
-	private Date time;
 	private TreeSet<Person> joins;
 
 	private Event() {
@@ -43,16 +42,6 @@ public final class Event {
 
 	private Event setName(String name) {
 		this.name = name;
-
-		return this;
-	}
-
-	public Date getTime() {
-		return time;
-	}
-
-	private Event setTime(Date time) {
-		this.time = time;
 
 		return this;
 	}
@@ -95,17 +84,7 @@ public final class Event {
 		TreeSet<Event> events = new TreeSet<Event>(new Comparator<Event>() {
 			@Override
 			public int compare(Event o1, Event o2) {
-				Calendar o1Time = Calendar.getInstance();
-				o1Time.setTime(o1.getTime());
-				Calendar o2Time = Calendar.getInstance();
-				o2Time.setTime(o2.getTime());
-				int timeDiff = (o1Time.get(Calendar.HOUR_OF_DAY) * 60 + o1Time.get(Calendar.MINUTE)
-						) - (o2Time.get(Calendar.HOUR_OF_DAY) * 60 + o2Time.get(Calendar.MINUTE));
-				if (timeDiff == 0) {
-					return (int) (o1.getKey().getId() - o2.getKey().getId());
-				} else {
-					return timeDiff;
-				}
+				return o1.name.compareTo(o2.name);
 			}
 		});
 
@@ -113,10 +92,10 @@ public final class Event {
 	}
 	
 	// Key will be null if created using this method.
-	public static Event createEvent(String name, Date time) {
-		if (name != null && time != null) {
+	public static Event createEvent(String name) {
+		if (name != null) {
 			Event event = new Event();
-			event.setName(name).setTime(time);
+			event.setName(name);
 			return event;
 		} else {
 			return null;
@@ -128,7 +107,6 @@ public final class Event {
 			Event event = new Event();
 			event.setKey(entity.getKey());
 			event.setName((String) entity.getProperty(PROPERTY_NAME));
-			event.setTime((Date) entity.getProperty(PROPERTY_TIME));
 
 			TreeSet<Person> joins = EventManager.getJoinPeople(entity.getKey());
 			event.setJoins(joins);
