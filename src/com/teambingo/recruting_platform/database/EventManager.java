@@ -35,19 +35,6 @@ public class EventManager {
 			eventEntity.setProperty(Event.PROPERTY_TIME, event.getTime());
 
 			eventKey = datastore.put(eventEntity);
-
-			if (event.getInvites() != null) {
-				for (Person person : event.getInvites()) {
-					Key personKey = person.getKey();
-					if (personKey == null) {
-						txn.rollback();
-						throw new NullKeyException("Person Key is null.");
-					}
-
-					Entity personKeyEntity = createPersonKeyEntity(personKey, eventKey);
-					datastore.put(personKeyEntity);
-				}
-			}
 			
 			if (event.getJoins() != null) {
 				for (Person person : event.getJoins()) {
@@ -72,59 +59,6 @@ public class EventManager {
 		}
 
 		return eventKey;
-	}
-
-	public synchronized static boolean addInvite(Person person, Key eventKey) {
-		HashSet<Person> people = new HashSet<Person>();
-		people.add(person);
-		
-		return addInvites(people, eventKey);
-	}
-	
-	public synchronized static boolean addInvite(Person person, long eventKeyId) {
-		Key eventKey = Event.createKey(eventKeyId);
-		
-		return addInvite(person, eventKey);
-	}
-
-	public synchronized static boolean addInvites(Iterable<Person> people, Key eventKey) {
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-
-		Transaction txn = datastore.beginTransaction();
-		try {
-			for (Person person : people) {
-				Key personKey = person.getKey();
-				if (personKey == null) {
-					txn.rollback();
-					throw new NullKeyException("Person Key is null.");
-				}
-				
-				if (isJoined(personKey, eventKey)) {
-					txn.rollback();
-					throw new PersonAlreadyJoinException("Person " + personKey.getName() + 
-							" already joined event " + eventKey.getId() + ".");
-				}
-
-				Entity personKeyEntity = createPersonKeyEntity(personKey, eventKey);
-				datastore.put(personKeyEntity);
-			}
-			txn.commit();
-		} finally {
-			if (txn.isActive()) {
-				txn.rollback();
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-	
-	public synchronized static boolean addInvites(Iterable<Person> people, long eventKeyId) {
-		Key eventKey = Event.createKey(eventKeyId);
-		
-		return addInvites(people, eventKey);
 	}
 	
 	public synchronized static boolean addJoin(Person person, Key eventKey) {
@@ -233,56 +167,6 @@ public class EventManager {
 //
 //		return events;
 //	}
-
-	/**
-	 * Get invite Person entities from an event key.
-	 * 
-	 * @param eventKey
-	 *            Event key.
-	 * @return A Iterable of Entity. Null if failed.
-	 */
-	public synchronized static Iterable<Entity> getInviteEntities(Key eventKey) {
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-
-		Query q = new Query(Event.KIND_PERSONKEY, eventKey);
-
-		PreparedQuery pq = datastore.prepare(q);
-
-		HashSet<Entity> inviteEntities = new HashSet<Entity>();
-		try {
-			for (Entity entity : pq.asIterable()) {
-				Key personKey = (Key) entity
-						.getProperty(Event.PROPERTY_PERSONKEY);
-
-				Entity personEntity = datastore.get(personKey);
-				inviteEntities.add(personEntity);
-			}
-		} catch (EntityNotFoundException e) {
-			return null;
-		}
-
-		return inviteEntities;
-	}
-
-	/**
-	 * Get an ordered set of invite Person objects from an event key.
-	 * 
-	 * @param eventKey
-	 *            Event key.
-	 * @return A set of invite Person ordered by the name of the person. Null if
-	 *         failed.
-	 */
-	public synchronized static TreeSet<Person> getInvitePeople(Key eventKey) {
-		Iterable<Entity> inviteEntities = getInviteEntities(eventKey);
-		if (inviteEntities != null) {
-			TreeSet<Person> invitePeople = Person.createPeople(inviteEntities);
-
-			return invitePeople;
-		} else {
-			return null;
-		}
-	}
 	
 	public synchronized static Iterable<Entity> getJoinEntities(Key eventKey) {
 		DatastoreService datastore = DatastoreServiceFactory
@@ -318,44 +202,18 @@ public class EventManager {
 		}
 	}
 	
-	public synchronized static boolean removePersonFromInvites(Key personKey, Key eventKey) {
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-		
-		Query q = new Query(Event.KIND_PERSONKEY, eventKey);
-		Filter personKeyFilter = new FilterPredicate(Event.PROPERTY_PERSONKEY, 
-				FilterOperator.EQUAL, personKey);
-		q.setFilter(personKeyFilter);
-		
-		PreparedQuery pq = datastore.prepare(q);
-		try {
-			for (Entity entity : pq.asIterable()) {
-				datastore.delete(entity.getKey());
-			}
-		} catch (RuntimeException e) {
-			return false;
-		}
-		
-		return true;
-	}
-	
 	public synchronized static boolean joinEvent(Key personKey, Key eventKey) {
 		Person person = PersonManager.getPerson(personKey);
 		boolean addResult = addJoin(person, eventKey);
-		if (addResult) {
-			boolean removeResult = removePersonFromInvites(personKey, eventKey);
-			return removeResult;
-		} else {
-			return addResult;
-		}
+		return addResult;
 	}
 
-	protected synchronized static Entity createPersonKeyEntity(Key personKey, Key eventKey) {
-		Entity personKeyEntity = new Entity(Event.KIND_PERSONKEY, personKey.getName(), eventKey);
-		personKeyEntity.setProperty(Event.PROPERTY_PERSONKEY, personKey);
-
-		return personKeyEntity;
-	}
+//	protected synchronized static Entity createPersonKeyEntity(Key personKey, Key eventKey) {
+//		Entity personKeyEntity = new Entity(Event.KIND_PERSONKEY, personKey.getName(), eventKey);
+//		personKeyEntity.setProperty(Event.PROPERTY_PERSONKEY, personKey);
+//
+//		return personKeyEntity;
+//	}
 	
 	protected synchronized static Entity createJoinPersonKeyEntity(Key personKey, Key eventKey) {
 		Entity joinPersonKeyEntity = new Entity(Event.KIND_JOIN_PERSONKEY, personKey.getName(), eventKey);

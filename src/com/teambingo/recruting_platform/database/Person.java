@@ -15,8 +15,8 @@ public class Person {
 	public static final String KIND_READ_EVENTKEY = "read-event-key";
 
 	public static final String PROPERTY_USERNAME = "username";
-	public static final String PROPERTY_FIRSTNAME = "firstname";
-	public static final String PROPERTY_LASTNAME = "lastname";
+//	public static final String PROPERTY_FIRSTNAME = "firstname";
+//	public static final String PROPERTY_LASTNAME = "lastname";
 	public static final String PROPERTY_EMAIL = "email";
 	public static final String PROPERTY_ADDRESS = "address";
 	public static final String PROPERTY_UNIVERSITY = "university";
@@ -29,8 +29,8 @@ public class Person {
 
 	private Key key;
 	private String username;
-	private String firstName;
-	private String lastName;
+//	private String firstName;
+//	private String lastName;
 	private Email email;
 	private String address;
 	private String university;
@@ -68,23 +68,23 @@ public class Person {
 		return this;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	private Person setFirstName(String firstName) {
-		this.firstName = firstName.trim();
-		return this;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	private Person setLastName(String lastName) {
-		this.lastName = lastName.trim();
-		return this;
-	}
+//	public String getFirstName() {
+//		return firstName;
+//	}
+//
+//	private Person setFirstName(String firstName) {
+//		this.firstName = firstName.trim();
+//		return this;
+//	}
+//
+//	public String getLastName() {
+//		return lastName;
+//	}
+//
+//	private Person setLastName(String lastName) {
+//		this.lastName = lastName.trim();
+//		return this;
+//	}
 
 	public Email getEmail() {
 		return email;
@@ -163,28 +163,21 @@ public class Person {
 			@Override
 			public int compare(Person o1, Person o2) {
 				// Sort first name first, then last name.
-				int fnc = o1.getFirstName().compareTo(o2.getFirstName());
-				if (fnc != 0) {
-					return fnc;
-				} else {
-					return o1.getLastName().compareTo(o2.getLastName());
-				}
+				int fnc = o1.getUsername().compareTo(o2.getUsername());
+				return fnc;
 			}
 		});
 
 		return people;
 	}
 
-	public static Person createPerson(String username, String firstName,
-			String lastName, String email) {
-		return createPerson(username, firstName, lastName, new Email(email));
+	public static Person createPerson(String username,String email) {
+		return createPerson(username, new Email(email));
 	}
 
-	public static Person createPerson(String username, String firstName,
-			String lastName, Email email) {
+	public static Person createPerson(String username, Email email) {
 		Person person = new Person();
-		person.setKey(username).setUsername(username).setFirstName(firstName)
-				.setLastName(lastName).setEmail(email);
+		person.setKey(username).setUsername(username).setEmail(email);
 
 		return person;
 	}
@@ -194,8 +187,8 @@ public class Person {
 			Person person = new Person();
 			person.setKey(entity.getKey());
 			person.setUsername((String) entity.getProperty(PROPERTY_USERNAME));
-			person.setFirstName((String) entity.getProperty(PROPERTY_FIRSTNAME));
-			person.setLastName((String) entity.getProperty(PROPERTY_LASTNAME));
+//			person.setFirstName((String) entity.getProperty(PROPERTY_FIRSTNAME));
+//			person.setLastName((String) entity.getProperty(PROPERTY_LASTNAME));
 			person.setEmail((Email) entity.getProperty(PROPERTY_EMAIL));
 
 			// HashSet<Key> readEventKeys =
@@ -235,7 +228,7 @@ public class Person {
 	@Override
 	public String toString() {
 		// return getFullName(true);
-		return "";
+		return getUsername();
 	}
 
 }

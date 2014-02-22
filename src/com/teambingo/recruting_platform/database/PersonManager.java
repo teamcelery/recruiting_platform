@@ -41,25 +41,23 @@ public class PersonManager {
 					person.getUsername());
 			personEntity.setProperty(Person.PROPERTY_USERNAME,
 					person.getUsername());
-			personEntity.setProperty(Person.PROPERTY_FIRSTNAME,
-					person.getFirstName());
-			personEntity.setProperty(Person.PROPERTY_LASTNAME,
-					person.getLastName());
+//			personEntity.setProperty(Person.PROPERTY_FIRSTNAME,person.getFirstName());
+//			personEntity.setProperty(Person.PROPERTY_LASTNAME,person.getLastName());
 			personEntity.setProperty(Person.PROPERTY_EMAIL, person.getEmail());
 
 			personKey = datastore.put(personEntity);
 			
-			if (person.getReadEventKeys() != null) {
-				for (Key eventKey : person.getReadEventKeys()) {
-					if (eventKey == null) {
-						txn.rollback();
-						throw new NullKeyException("Event Key is null.");
-					}
-					
-					Entity eventKeyEntity = createReadEventKeyEntity(eventKey, personKey);
-					datastore.put(eventKeyEntity);
-				}
-			}
+//			if (person.getReadEventKeys() != null) {
+//				for (Key eventKey : person.getReadEventKeys()) {
+//					if (eventKey == null) {
+//						txn.rollback();
+//						throw new NullKeyException("Event Key is null.");
+//					}
+//					
+//					Entity eventKeyEntity = createReadEventKeyEntity(eventKey, personKey);
+//					datastore.put(eventKeyEntity);
+//				}
+//			}
 
 			txn.commit();
 		} finally {
@@ -320,61 +318,6 @@ public class PersonManager {
 		} else {
 			return null;
 		}
-	}
-
-	
-	public synchronized static Iterable<Entity> getInviteEventEntities(Key personKey, boolean filterReadEvent) {
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-		
-		Query q = new Query(Event.KIND_PERSONKEY);
-		Filter personKeyFilter = new FilterPredicate(Event.PROPERTY_PERSONKEY, FilterOperator.EQUAL, personKey);
-		q.setFilter(personKeyFilter);
-		
-		PreparedQuery pq = datastore.prepare(q);
-		
-		HashSet<Key> readEventKeys = null;
-		if (filterReadEvent) {
-			readEventKeys = getReadEventKeys(personKey);
-		}
-		
-		log.info("Read event keys: " + readEventKeys + ".");
-		
-		HashSet<Entity> inviteEventEntities = new HashSet<Entity>();
-		try {
-			for (Entity entity : pq.asIterable()) {
-				Key inviteEventKey = entity.getParent();
-				if (filterReadEvent && readEventKeys != null) {
-					if (!readEventKeys.contains(inviteEventKey)) {
-						Entity inviteEventEntity = datastore.get(inviteEventKey);
-						inviteEventEntities.add(inviteEventEntity);
-					}
-				} else {
-					Entity inviteEventEntity = datastore.get(inviteEventKey);
-					inviteEventEntities.add(inviteEventEntity);
-				}
-			}
-		} catch (EntityNotFoundException e) {
-			return null;
-		}
-		
-		return inviteEventEntities;
-	}
-	
-	public synchronized static TreeSet<Event> getInviteEvents(Key personKey, boolean filterReadEvent) {
-		Iterable<Entity> inviteEventEntities = getInviteEventEntities(personKey, filterReadEvent);
-		
-		if (inviteEventEntities != null) {
-			TreeSet<Event> inviteEvents = Event.createEvents(inviteEventEntities);
-			
-			return inviteEvents;
-		} else {
-			return null;
-		}
-	}
-	
-	public synchronized static TreeSet<Event> getInviteEvents(Key personKey) {
-		return getInviteEvents(personKey, false);
 	}
 	
 	public synchronized static Iterable<Entity> getJoinEventEntities(Key personKey) {
