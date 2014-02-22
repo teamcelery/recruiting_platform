@@ -41,9 +41,13 @@ public class PersonManager {
 					person.getUsername());
 			personEntity.setProperty(Person.PROPERTY_USERNAME,
 					person.getUsername());
-//			personEntity.setProperty(Person.PROPERTY_FIRSTNAME,person.getFirstName());
-//			personEntity.setProperty(Person.PROPERTY_LASTNAME,person.getLastName());
 			personEntity.setProperty(Person.PROPERTY_EMAIL, person.getEmail());
+			personEntity.setProperty(Person.PROPERTY_ADDRESS, person.getAddress());
+			personEntity.setProperty(Person.PROPERTY_UNIVERSITY, person.getUniversity());
+			personEntity.setProperty(Person.PROPERTY_MAJOR, person.getMajor());
+			personEntity.setProperty(Person.PROPERTY_GPA, person.getGPA());
+			personEntity.setProperty(Person.PROPERTY_BACKGROUND, person.getBackground());
+			personEntity.setProperty(Person.PROPERTY_INTEREST, person.getInterest());
 
 			personKey = datastore.put(personEntity);
 			
