@@ -3,8 +3,9 @@
 <head>
 
 <%@ page import="com.teambingo.recruting_platform.database.Person"%>
-<%@ page import="com.teambingo.recruting_platform.database.PersonManager"%>
-<%@ page import="java.util.Set" %>
+<%@ page
+	import="com.teambingo.recruting_platform.database.PersonManager"%>
+<%@ page import="java.util.Set"%>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -104,6 +105,13 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="inputAddress" class="col-sm-2 control-label">Address</label>
+							<div class="col-sm-10">
+								<input type="address" class="form-control" id="inputAddress"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="inputUniversity" class="col-sm-2 control-label">University</label>
 							<div class="col-sm-10">
 								<input type="email" class="form-control" id="inputUniversity"
@@ -142,7 +150,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Add</button>
+					<button type="button" class="btn btn-primary"
+						id="add-candidate-button">Add</button>
 				</div>
 			</div>
 		</div>

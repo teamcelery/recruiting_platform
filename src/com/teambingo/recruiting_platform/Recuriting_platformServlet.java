@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.datastore.Key;
 import com.teambingo.recruting_platform.database.Person;
+import com.teambingo.recruting_platform.database.PersonManager;
 
 @SuppressWarnings("serial")
 public class Recuriting_platformServlet extends HttpServlet {
@@ -26,6 +27,7 @@ public class Recuriting_platformServlet extends HttpServlet {
 								.getAttribute("id") : "-1");
 				if (id >= 0) {
 					Key personKey = Person.createKey(id);
+					Person p = PersonManager.getPerson(personKey);
 				} else {
 					error(resp, 0x2);
 				}
@@ -38,10 +40,23 @@ public class Recuriting_platformServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String action = (String) req.getAttribute("action");
+		String action = (String) req.getParameter("action");
+		System.out.println("action: " + action);
 		if (action != null) {
 			if (action.equals("setcandidate")) {
-				req.getAttribute("test");
+				System.out.println("adding candidate");
+				String name = (String) req.getParameter("name");
+				String email = (String) req.getParameter("email");
+				String address = req.getParameter("address");
+				String university = (String) req.getParameter("university");
+				String major = (String) req.getParameter("major");
+				double gpa = Double.parseDouble(req.getParameter("gpa"));
+				String background = req.getParameter("background");
+				String interests = req.getParameter("interests");
+				String status = req.getParameter("status");
+				
+				Person p = Person.createPerson(name, email, address, university, major, gpa, background, interests, status);
+				PersonManager.addPerson(p);
 			}
 		} else {
 			error(resp, 0x1);
