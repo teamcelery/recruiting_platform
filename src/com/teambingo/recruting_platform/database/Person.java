@@ -68,24 +68,6 @@ public class Person {
 		return this;
 	}
 
-//	public String getFirstName() {
-//		return firstName;
-//	}
-//
-//	private Person setFirstName(String firstName) {
-//		this.firstName = firstName.trim();
-//		return this;
-//	}
-//
-//	public String getLastName() {
-//		return lastName;
-//	}
-//
-//	private Person setLastName(String lastName) {
-//		this.lastName = lastName.trim();
-//		return this;
-//	}
-
 	public Email getEmail() {
 		return email;
 	}
@@ -171,13 +153,14 @@ public class Person {
 		return people;
 	}
 
-	public static Person createPerson(String username,String email) {
-		return createPerson(username, new Email(email));
-	}
-
-	public static Person createPerson(String username, Email email) {
+	public static Person createPerson(String username, String email,
+			String address, String university, String major, double gpa,
+			String background, String interest) {
 		Person person = new Person();
-		person.setKey(username).setUsername(username).setEmail(email);
+		person.setKey(username).setUsername(username)
+				.setEmail(new Email(email)).setAddress(address)
+				.setUniversity(university).setMajor(major).setGPA(gpa)
+				.setBackground(background).setInterest(interest);
 
 		return person;
 	}
@@ -187,20 +170,18 @@ public class Person {
 			Person person = new Person();
 			person.setKey(entity.getKey());
 			person.setUsername((String) entity.getProperty(PROPERTY_USERNAME));
-//			person.setFirstName((String) entity.getProperty(PROPERTY_FIRSTNAME));
-//			person.setLastName((String) entity.getProperty(PROPERTY_LASTNAME));
 			person.setEmail((Email) entity.getProperty(PROPERTY_EMAIL));
-
-			// HashSet<Key> readEventKeys =
-			// PersonManager.getReadEventKeys(entity.getKey());
-			// person.setReadEventKeys(readEventKeys);
-
+			person.setAddress((String) entity.getProperty(PROPERTY_ADDRESS));
+			person.setUniversity((String) entity.getProperty(PROPERTY_UNIVERSITY));
+			person.setMajor((String) entity.getProperty(PROPERTY_MAJOR));
+			person.setGPA((double) entity.getProperty(PROPERTY_GPA));
+			person.setBackground((String) entity.getProperty(PROPERTY_BACKGROUND));
+			person.setInterest((String) entity.getProperty(PROPERTY_INTEREST));
 			return person;
 		} else {
-			// throw new EntityKindNotMatchException(
-			// "Entity Kind must be KIND_PERSON instead of "
-			// + entity.getKind() + ".");
-			return null;
+			 throw new EntityKindNotMatchException(
+			 "Entity Kind must be KIND_PERSON instead of "
+			 + entity.getKind() + ".");
 		}
 	}
 
@@ -227,7 +208,6 @@ public class Person {
 
 	@Override
 	public String toString() {
-		// return getFullName(true);
 		return getUsername();
 	}
 
