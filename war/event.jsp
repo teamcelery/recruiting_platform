@@ -2,9 +2,9 @@
 <html>
 <head>
 
-<%@ page import="com.teambingo.recruting_platform.database.Person"%>
+<%@ page import="com.teambingo.recruting_platform.database.Event"%>
 <%@ page
-	import="com.teambingo.recruting_platform.database.PersonManager"%>
+	import="com.teambingo.recruting_platform.database.EventManager"%>
 <%@ page import="java.util.Set"%>
 
 <meta charset="utf-8">
@@ -32,8 +32,8 @@
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/candidate.jsp">Candidates</a></li>
-					<li><a href="/event.jsp">Events</a></li>
+					<li class="active"><a href="#candidates">Candidates</a></li>
+					<li><a href="#events">Events</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -53,23 +53,22 @@
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
-					<th>University</th>
+					<!-- <th>University</th>
 					<th>Major</th>
-					<th>Status</th>
+					<th>Status</th> -->
 				</tr>
 			</thead>
 			<tbody>
 				<%
-					Set<Person> candidatePeople = Person.createPeople(PersonManager
-							.getPeople());
-					for (Person p : candidatePeople) {
+					Set<Event> events = Event.createEvents(EventManager.getEvents());
+					for (Event e : events) {
 				%>
 				<tr>
-					<td><span class="candidate-id"><%=p.getKey().getId()%></span></td>
-					<td><%=p.getUsername()%></td>
-					<td><%=p.getUniversity()%></td>
+					<td><span class="candidate-id"><%=e.getKey().getId() %></span></td>
+					<td><%=e.getName()%></td>
+					<%-- <td><%=p.getUniversity()%></td>
 					<td><%=p.getMajor()%></td>
-					<td><%=p.getStatus()%></td>
+					<td><%=p.getStatus()%></td> --%>
 				</tr>
 				<%
 					}
