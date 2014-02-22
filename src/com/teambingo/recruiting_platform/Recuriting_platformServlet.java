@@ -1,4 +1,4 @@
-package com.teambingo.recuriting_platform;
+package com.teambingo.recruiting_platform;
 import java.io.IOException;
 import javax.servlet.http.*;
 
