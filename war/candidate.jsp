@@ -68,7 +68,7 @@
 					<td><%=p.getUsername()%></td>
 					<td><%=p.getUniversity()%></td>
 					<td><%=p.getMajor()%></td>
-					<td>offer pending</td>
+					<td><%=p.getStatus()%></td>
 				</tr>
 				<%
 					}

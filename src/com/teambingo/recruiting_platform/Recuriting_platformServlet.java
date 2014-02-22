@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.datastore.Key;
+import com.teambingo.recruting_platform.database.Person;
+
 @SuppressWarnings("serial")
 public class Recuriting_platformServlet extends HttpServlet {
 
@@ -18,11 +21,11 @@ public class Recuriting_platformServlet extends HttpServlet {
 		String action = (String) req.getAttribute("action");
 		if (action != null) {
 			if (action.equals("getcandidate")) {
-				int id = Integer
-						.parseInt(req.getAttribute("id") != null ? (String) req
+				long id = Long
+						.parseLong(req.getAttribute("id") != null ? (String) req
 								.getAttribute("id") : "-1");
-				if (id > 0) {
-
+				if (id >= 0) {
+					Key personKey = Person.createKey(id);
 				} else {
 					error(resp, 0x2);
 				}

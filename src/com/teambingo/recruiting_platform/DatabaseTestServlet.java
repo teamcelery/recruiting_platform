@@ -23,7 +23,11 @@ public class DatabaseTestServlet extends HttpServlet {
 		Person p = Person.createPerson("John Doe", "johndoe@purdue.edu",
 				"Address", "Purdue University", "Computer Science", 3.5,
 				"None", "AI","");
+		Person p2 = Person.createPerson("Jane Doe", "janedoe@purdue.edu",
+				"Address", "Purdue University", "Computer Science", 3.5,
+				"None", "AI","");
 		PersonManager.addPerson(p);
+		PersonManager.addPerson(p2);
 
 		Event e = Event.createEvent("Test event",
 				new Date(System.currentTimeMillis()));
@@ -31,8 +35,8 @@ public class DatabaseTestServlet extends HttpServlet {
 
 		EventManager.addJoin(p, eKey);
 
-		Event databaseE = EventManager.getEvent(eKey);
-		resp.getWriter().println(databaseE.getJoins().iterator().next());
+//		Event databaseE = EventManager.getEvent(eKey);
+//		resp.getWriter().println(databaseE.getJoins().iterator().next());
 	}
 
 }

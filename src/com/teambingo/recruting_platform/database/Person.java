@@ -213,8 +213,8 @@ public class Person {
 		}
 	}
 
-	public static Key createKey(String personKeyName) {
-		return KeyFactory.createKey(KIND_PERSON, personKeyName);
+	public static Key createKey(long personKeyId) {
+		return KeyFactory.createKey(KIND_PERSON, personKeyId);
 	}
 
 	@Override
