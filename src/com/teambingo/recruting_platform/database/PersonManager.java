@@ -48,6 +48,7 @@ public class PersonManager {
 			personEntity.setProperty(Person.PROPERTY_GPA, person.getGPA());
 			personEntity.setProperty(Person.PROPERTY_BACKGROUND, person.getBackground());
 			personEntity.setProperty(Person.PROPERTY_INTEREST, person.getInterest());
+			personEntity.setProperty(Person.PROPERTY_STATUS, person.getStatus());
 
 			personKey = datastore.put(personEntity);
 			

@@ -131,6 +131,16 @@ public class Person {
 		return this;
 	}
 
+
+	public String getStatus() {
+		return status;
+	}
+
+	private Person setStatus(String status) {
+		this.status = status.trim();
+		return this;
+	}
+	
 	public HashSet<Key> getReadEventKeys() {
 		return readEventKeys;
 	}
@@ -155,12 +165,12 @@ public class Person {
 
 	public static Person createPerson(String username, String email,
 			String address, String university, String major, double gpa,
-			String background, String interest) {
+			String background, String interest, String status) {
 		Person person = new Person();
 		person.setKey(username).setUsername(username)
 				.setEmail(new Email(email)).setAddress(address)
 				.setUniversity(university).setMajor(major).setGPA(gpa)
-				.setBackground(background).setInterest(interest);
+				.setBackground(background).setInterest(interest).setStatus(status);
 
 		return person;
 	}
@@ -177,6 +187,7 @@ public class Person {
 			person.setGPA((double) entity.getProperty(PROPERTY_GPA));
 			person.setBackground((String) entity.getProperty(PROPERTY_BACKGROUND));
 			person.setInterest((String) entity.getProperty(PROPERTY_INTEREST));
+			person.setStatus((String) entity.getProperty(PROPERTY_STATUS));
 			return person;
 		} else {
 			 throw new EntityKindNotMatchException(

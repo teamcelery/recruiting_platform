@@ -22,7 +22,7 @@ public class DatabaseTestServlet extends HttpServlet {
 
 		Person p = Person.createPerson("John Doe", "johndoe@purdue.edu",
 				"Address", "Purdue University", "Computer Science", 3.5,
-				"None", "AI");
+				"None", "AI","");
 		PersonManager.addPerson(p);
 
 		Event e = Event.createEvent("Test event",
