@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<%@ page import="com.teambingo.recruting_platform.database.Person"%>
+<%@ page import="com.teambingo.recruting_platform.database.PersonManager"%>
+<%@ page import="java.util.Set" %>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,20 +58,21 @@
 				</tr>
 			</thead>
 			<tbody>
+				<%
+					Set<Person> candidatePeople = Person.createPeople(PersonManager
+							.getPeople());
+					for (Person p : candidatePeople) {
+				%>
 				<tr>
-					<td><span class="candidate-id">1</span></td>
+					<td><span class="candidate-id"><%=p.getKey().getId()%></span></td>
 					<td>John Doe</td>
 					<td>Purdue University</td>
 					<td>Computer Science</td>
 					<td>offer pending</td>
 				</tr>
-				<tr>
-					<td><span class="candidate-id">2</span></td>
-					<td>Jane Doe</td>
-					<td>Purdue University</td>
-					<td>Computer Science</td>
-					<td>offer pending</td>
-				</tr>
+				<%
+					}
+				%>
 			</tbody>
 		</table>
 	</div>

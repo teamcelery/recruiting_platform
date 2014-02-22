@@ -1,11 +1,17 @@
 package com.teambingo.recruiting_platform;
 
 import java.io.IOException;
-import javax.servlet.http.*;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 public class Recuriting_platformServlet extends HttpServlet {
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		// resp.setContentType("text/plain");
 		// resp.getWriter().println("Hello, world");
@@ -16,10 +22,23 @@ public class Recuriting_platformServlet extends HttpServlet {
 						.parseInt(req.getAttribute("id") != null ? (String) req
 								.getAttribute("id") : "-1");
 				if (id > 0) {
-					
+
 				} else {
 					error(resp, 0x2);
 				}
+			}
+		} else {
+			error(resp, 0x1);
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String action = (String) req.getAttribute("action");
+		if (action != null) {
+			if (action.equals("setcandidate")) {
+				req.getAttribute("test");
 			}
 		} else {
 			error(resp, 0x1);

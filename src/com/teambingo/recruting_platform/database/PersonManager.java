@@ -357,6 +357,16 @@ public class PersonManager {
 		}
 	}
 	
+	public synchronized static Iterable<Entity> getPeople() {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		
+		Query q = new Query(Person.KIND_PERSON);
+		
+		PreparedQuery pq = datastore.prepare(q);
+		
+		return pq.asIterable();
+	}
+	
 	protected synchronized static Entity createReadEventKeyEntity(Key eventKey, Key personKey) {
 		Entity readEventKeyEntity = new Entity(Person.KIND_READ_EVENTKEY, eventKey.getId(), personKey);
 		readEventKeyEntity.setProperty(Person.PROPERTY_EVENTKEY, eventKey);
