@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns="http://java.sun.com/xml/ns/javaee"
-xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
 	<servlet>
 		<servlet-name>Recuriting_platform</servlet-name>
 		<servlet-class>com.teambingo.recruiting_platform.Recuriting_platformServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>DatabaseTest</servlet-name>
+		<servlet-class>com.teambingo.recruiting_platform.DatabaseTestServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Recuriting_platform</servlet-name>
 		<url-pattern>/rp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DatabaseTest</servlet-name>
+		<url-pattern>/dbtest</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>candidate.jsp</welcome-file>
