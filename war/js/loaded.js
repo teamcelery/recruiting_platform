@@ -3,7 +3,10 @@
 		
 		$("div.candidate-table table tr").click(function() {
 			var candidateId = $(this).find(".candidate-id").html();
-			openCandidateInfo(candidateId);
+			
+			if (candidateId) {
+				openCandidateInfo(candidateId);
+			}
 		});
 		
 		$("div.candidate-table button.new-candidate").click(function() {

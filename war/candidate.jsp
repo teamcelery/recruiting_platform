@@ -65,9 +65,9 @@
 				%>
 				<tr>
 					<td><span class="candidate-id"><%=p.getKey().getId()%></span></td>
-					<td>John Doe</td>
-					<td>Purdue University</td>
-					<td>Computer Science</td>
+					<td><%=p.getUsername()%></td>
+					<td><%=p.getUniversity()%></td>
+					<td><%=p.getMajor()%></td>
 					<td>offer pending</td>
 				</tr>
 				<%
