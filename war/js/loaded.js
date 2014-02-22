@@ -14,6 +14,11 @@
 	
 	var openCandidateInfo = function(id) {
 		console.log("candidate id", id);
+		
+		$.get("/rp?action=getcandidate&id=" + id, function(data) {
+			console.log(data);
+		});
+		
 		$("#newCandidateModal").modal().show();
 	};
 })();
