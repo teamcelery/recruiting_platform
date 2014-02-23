@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.datastore.Key;
+import com.teambingo.recruting_platform.database.Event;
+import com.teambingo.recruting_platform.database.EventManager;
 import com.teambingo.recruting_platform.database.Person;
 import com.teambingo.recruting_platform.database.PersonManager;
 
@@ -28,6 +30,8 @@ public class Recuriting_platformServlet extends HttpServlet {
 				if (id >= 0) {
 					Key personKey = Person.createKey(id);
 					Person p = PersonManager.getPerson(personKey);
+					
+					resp.getWriter().println("TEST!!!");
 				} else {
 					error(resp, 0x2);
 				}
@@ -57,6 +61,14 @@ public class Recuriting_platformServlet extends HttpServlet {
 				
 				Person p = Person.createPerson(name, email, address, university, major, gpa, background, interests, status);
 				PersonManager.addPerson(p);
+			} else if (action.equals("setevent")) {
+				System.out.println("adding event");
+				String name = (String) req.getParameter("name");
+				System.out.println(name);
+				
+				Event e = Event.createEvent(name);
+				System.out.println(e.getName());
+				EventManager.addEvent(e);
 			}
 		} else {
 			error(resp, 0x1);

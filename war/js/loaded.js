@@ -51,15 +51,87 @@
 
 			// console.log(name);
 		});
+		
+		$("#add-event-button").click(function() {
+			var name = $("#inputName").val();
+
+			console.log("event name", name);
+			var data = {
+				"action": "setevent",
+				"name" : name
+			};
+
+			$.ajax({
+				type : "POST",
+				url : "/rp",
+				data : data,
+				success : function(data) {
+				},
+				dataType : "json"
+			});
+			
+			$("#newEventModal").modal('hide');
+			
+			location.reload();
+
+			// console.log(name);
+		});
 
 	});
 
 	var openCandidateInfo = function(id) {
 		console.log("candidate id", id);
-
-		$.getJSON("/rp?action=getcandidate&id=" + id, function(data) {
-			console.log(data);
+		
+		$.ajax({
+			type: "GET",
+			url: "/rp",
+			data: "action=getcandidate&id=" + id,
+//			data: "action=getcandidate&id=-1",
+			success: function(data) {
+				console.log(data);
+			}
 		});
+
+//		$.getJSON("/rp?action=getcandidate&id=" + id, function(data) {
+//			function() {
+//				var name = $("#inputName").val();
+//				var email = $("#inputEmail").val();
+//				var address = $("#inputAddress").val();
+//				var u = $("#inputUniversity").val();
+//				var major = $("#inputMajor").val();
+//				var gpa = $("#inputGPA").val();
+//				var back = $("#inputBackground").val();
+//				var interests = $("#inputInterests").val();
+//
+//				var data = {
+//					"action": "setcandidate",
+//					"name" : name,
+//					"address": address,
+//					"email" : email,
+//					"university" : u,
+//					"major" : major,
+//					"gpa" : gpa,
+//					"background" : back,
+//					"interests" : interests,
+//					"status" : ""
+//				};
+//
+//				$.ajax({
+//					type : "POST",
+//					url : "/rp",
+//					data : data,
+//					success : function(data) {
+//					},
+//					dataType : "json"
+//				});
+//				
+//				$("#newCandidateModal").modal('hide');
+//				
+//				location.reload();
+//
+//				// console.log(name);
+//			}
+//		});
 
 		$("#newCandidateModal").modal().show();
 	};

@@ -53,8 +53,10 @@
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
+					<th>Email</th>
 					<th>University</th>
 					<th>Major</th>
+					<th>GPA</th>
 					<th>Status</th>
 				</tr>
 			</thead>
@@ -67,8 +69,10 @@
 				<tr>
 					<td><span class="candidate-id"><%=p.getKey().getId()%></span></td>
 					<td><%=p.getUsername()%></td>
+					<td><%=p.getEmail().getEmail()%></td>
 					<td><%=p.getUniversity()%></td>
 					<td><%=p.getMajor()%></td>
+					<td><%=p.getGPA()%></td>
 					<td><%=p.getStatus()%></td>
 				</tr>
 				<%
@@ -152,6 +156,91 @@
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary"
 						id="add-candidate-button">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="editCandidateModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Add New Candidate</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="inputName" class="col-sm-2 control-label">Name</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputName"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail" class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputEmail"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputAddress" class="col-sm-2 control-label">Address</label>
+							<div class="col-sm-10">
+								<input type="address" class="form-control" id="inputAddress"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputUniversity" class="col-sm-2 control-label">University</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputUniversity"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputMajor" class="col-sm-2 control-label">Major</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputMajor"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputGPA" class="col-sm-2 control-label">GPA</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputGPA"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputBackground" class="col-sm-2 control-label">Background</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputBackground"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputInterests" class="col-sm-2 control-label">Interests</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputInterests"
+									placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputInterests" class="col-sm-2 control-label">Status</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputStatus"
+									placeholder="">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary"
+						id="edit-candidate-button">Edit</button>
 				</div>
 			</div>
 		</div>

@@ -29,22 +29,23 @@ public class EventManager {
 		try {
 
 			Entity eventEntity = new Entity(Event.KIND_EVENT);
-
+			eventEntity.setProperty(Event.PROPERTY_NAME, event.getName());
+			
 			eventKey = datastore.put(eventEntity);
 
-			if (event.getJoins() != null) {
-				for (Person person : event.getJoins()) {
-					Key personKey = person.getKey();
-					if (personKey == null) {
-						txn.rollback();
-						throw new NullKeyException("Person Key is null.");
-					}
-
-					Entity joinPersonKeyEntity = createJoinPersonKeyEntity(
-							personKey, eventKey);
-					datastore.put(joinPersonKeyEntity);
-				}
-			}
+//			if (event.getJoins() != null) {
+//				for (Person person : event.getJoins()) {
+//					Key personKey = person.getKey();
+//					if (personKey == null) {
+//						txn.rollback();
+//						throw new NullKeyException("Person Key is null.");
+//					}
+//
+//					Entity joinPersonKeyEntity = createJoinPersonKeyEntity(
+//							personKey, eventKey);
+//					datastore.put(joinPersonKeyEntity);
+//				}
+//			}
 
 			txn.commit();
 		} finally {

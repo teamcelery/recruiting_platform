@@ -84,7 +84,7 @@ public final class Event {
 		TreeSet<Event> events = new TreeSet<Event>(new Comparator<Event>() {
 			@Override
 			public int compare(Event o1, Event o2) {
-				return o1.name.compareTo(o2.name);
+				return o1.getName().compareTo(o2.getName());
 			}
 		});
 
@@ -126,6 +126,7 @@ public final class Event {
 		for (Entity entity : entities) {
 			empty = false;
 			Event event = createEvent(entity);
+			System.out.println(event.getName());
 			events.add(event);
 		}
 
